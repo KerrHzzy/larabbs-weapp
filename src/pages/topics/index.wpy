@@ -97,10 +97,14 @@
     data: {
       // 分类数据
       categories: [],
-      // 当前的分类
+      // 当前分类
       currentCategory: {},
-      // 是否显示分类
+      // 分类列表是否展开
       categoryOpen: false,
+    },
+    async onLoad() {
+      this.loadCategories()
+      this.loadData()
     },
     computed: {
       currentCategoryId() {
@@ -111,8 +115,54 @@
       }
     },
     methods: {
+      // 获取话题数据
+      async loadTopics(reset = false) {
+
+        let params = {
+          page: this.page,
+          include: 'user,category'
+        }
+
+        if (this.currentCategoryId) {
+          params['filter[category_id]'] = this.currentCategoryId
+        }
+
+        // 请求话题列表接口
+        const topicsResponse = await getTopics(params)
+
+        // 将数据合并到 this.topics
+        this.topics = reset ? topicsResponse.data.data : this.topics.concat(topicsResponse.data.data)
+
+        const pagination = topicsResponse.data.meta
+
+        // 根据分页设置是否还有更多数据
+        if (pagination.current_page === pagination.last_page) {
+          this.noMoreData = true
+        }
+      },
+      async loadCategories() {
+        // 从缓存中获取分类数据
+        let categories = wx.getStorageSync('categories')
+
+        if (!categories) {
+          const categoriesResponse = await getCategories()
+          categories = categoriesResponse.data.data
+
+          wx.setStorageSync('categories', categories)
+        }
+
+        this.categories = categories
+      },
       categorisToggle() {
         this.categoryOpen = !this.categoryOpen
+      },
+      async changeCategory (category = {}) {
+        this.currentCategory = category
+        this.categoryOpen = false
+        this.page = 1
+
+        // 调用组件的 reload 方法
+        this.loadTopics(true)
       },
       async fetchData() {
         let params = {
@@ -126,14 +176,6 @@
 
         // 请求话题列表接口
         return getTopics(params)
-      },
-      async changeCategory (category = {}) {
-        this.currentCategory = category
-        this.categoryOpen = false
-        this.page = 1
-
-        // 调用组件的 reload 方法
-        this.loadData(true)
       }
     }
   })
