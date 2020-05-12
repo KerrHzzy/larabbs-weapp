@@ -74,7 +74,7 @@
           </div>
         </div>
         <div class="weui-panel__ft">
-          <a class="weui-cell weui-cell_access weui-cell_link" url="/pages/replies/index?id={{ topic.id }}">
+          <a class="weui-cell weui-cell_access weui-cell_link" url="/pages/replies/index?topic_id={{ topic.id }}">
             <div class="weui-cell__bd">查看全部回复</div>
             <div class="weui-cell__ft weui-cell__ft_in-access"></div>
           </a>
