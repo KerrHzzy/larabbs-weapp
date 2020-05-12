@@ -7,7 +7,6 @@
 
 <script>
 import wepy from '@wepy/core'
-import eventHub from './common/eventHub'
 import vuex from '@wepy/x'
 import promisify  from '@wepy/use-promisify';
 
@@ -35,7 +34,8 @@ wepy.app({
     'pages/users/show',
     'pages/auth/login',
     'pages/auth/register',
-    'pages/replies/index'
+    'pages/replies/index',
+    'pages/replies/user-index'
   ],
   window: {
     backgroundTextStyle: 'light',

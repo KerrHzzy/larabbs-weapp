@@ -95,7 +95,7 @@
 </template>
 <config>
   {
-  navigationBarTitleText: '注册',
+    navigationBarTitleText: '注册',
   }
 </config>
 <script>

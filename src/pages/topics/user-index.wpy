@@ -5,11 +5,11 @@
 </template>
 <config>
   {
-  navigationBarTitleText: 'Ta 发布的话题',
-  enablePullDownRefresh: true,
-  usingComponents: {
-  "topic-list": "~@/components/topic-list"
-  }
+    navigationBarTitleText: 'Ta 发布的话题',
+    enablePullDownRefresh: true,
+    usingComponents: {
+      "topic-list": "~@/components/topic-list"
+    }
   }
 </config>
 <script>
